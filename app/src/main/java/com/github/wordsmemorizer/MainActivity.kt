@@ -8,13 +8,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import com.github.wordsmemorizer.navigation.Navigator
-import com.github.wordsmemorizer.ui.theme.WordsMemorizerTheme
+import com.github.wordsmemorizer.ui.theme.WordsMemorizeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WordsMemorizerTheme {
+            WordsMemorizeTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background

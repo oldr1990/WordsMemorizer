@@ -1,7 +1,7 @@
-package com.github.wordsmemorizer.screens
+package com.github.wordsmemorizer.screens.add_word
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -11,15 +11,14 @@ import androidx.navigation.NavController
 import com.github.wordsmemorizer.navigation.Routes
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavController) {
+fun AddWord(navController: NavController) {
     Scaffold(modifier = Modifier,
-    topBar = {
-        WMTopAppBar("Burning Words", navController, false)
-    }) { 
-        Column(modifier = Modifier) {
-            Button(onClick = {navController.navigate(Routes.addCard) }) {
+        topBar = {
+            WMTopAppBar("Add Word", navController)
+        }) {
+        Column(modifier = Modifier.padding(it)) {
+            Button(onClick = {navController.navigate(Routes.ADD_CARD.name) }) {
                 Text(text = "Go")
             }
         }

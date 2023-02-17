@@ -15,8 +15,8 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = Color(0xFFB1693A),
-    primaryVariant = Purple700,
-    secondary = Teal200
+    primaryVariant = Color.Gray,
+    secondary = Color.Magenta
 
     /* Other default colors to override
     background = Color.White,
@@ -29,7 +29,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun WordsMemorizerTheme(
+fun WordsMemorizeTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
