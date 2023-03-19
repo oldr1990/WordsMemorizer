@@ -14,25 +14,6 @@ class HomeScreenViewModel @Inject constructor(
 ) : ViewModel() {
     private val _state = MutableStateFlow(emptyList<Int>())
     val state: StateFlow<List<Int>> = _state
-    fun onEvent(event: HomeScreenEvent) {
-        when (event) {
-            is HomeScreenEvent.AddWord -> {
-                viewModelScope.launch {
-                //   dao.upsertWord(event.word)
-                }
-            }
-            is HomeScreenEvent.Answer -> {
-
-            }
-            is HomeScreenEvent.DeleteWord -> {
-                viewModelScope.launch {
-                   // dao.deleteWord(event.word)
-                }
-            }
-            HomeScreenEvent.MemoryCheck -> {}
-            HomeScreenEvent.OpenSettings -> {}
-        }
-    }
 
     fun addItem(item: Int){
         _state.update { _state.value + item }
