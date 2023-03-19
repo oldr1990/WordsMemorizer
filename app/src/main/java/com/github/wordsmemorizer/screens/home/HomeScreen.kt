@@ -5,16 +5,17 @@ import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.github.wordsmemorizer.navigation.Routes
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hiltViewModel()) {
+   // val state = viewModel.state.collectAsState()
     Scaffold(modifier = Modifier,
         topBar = {
             WMTopAppBar("Burning Words", navController, false)
@@ -27,7 +28,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
-                onClick = { navController.navigate(Routes.ADD_CARD.name) },
+                onClick = { viewModel.addItem(3) },
             ) {
                 Text(text = "Go")
             }
