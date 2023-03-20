@@ -1,3 +1,6 @@
 package com.github.wordsmemorizer.navigation
 
-enum class Routes { HOME, ADD_CARD }
+object Routes {
+    const val HOME = "home"
+    const val ADD_CARD = "add_card"
+}
