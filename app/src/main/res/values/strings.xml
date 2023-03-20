@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Words Memorizer</string>
+    <string name="settings">Настройки</string>
+    <string name="back">Назад</string>
+    <string name="add">Добавить</string>
+    <string name="add_word">Добавить Слово</string>
+    <string name="delete">Удавлить</string>
 </resources>
