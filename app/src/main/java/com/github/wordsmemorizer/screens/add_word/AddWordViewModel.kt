@@ -2,20 +2,43 @@ package com.github.wordsmemorizer.screens.add_word
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.github.wordsmemorizer.models.Word
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class AddWordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val _state = MutableStateFlow(emptyList<Int>())
-    val state: StateFlow<List<Int>> = _state
 
-    fun addItem(item: Int){
-        _state.update { _state.value + item }
+    private val _state = MutableStateFlow(AddWordState())
+    val state = _state.asStateFlow()
+
+    fun addDefinition(definition: String){
+        val list = _state.value.definitions + listOf(definition)
+        _state.value = _state.value.copy(definitions =  list.toSet().toList())
+    }
+    fun removeDefinition(definition: String){
+        val list = _state.value.definitions.filter { it != definition }
+        _state.value = _state.value.copy(definitions =  list)
+    }
+
+    fun addLexicalType(lexicalType: String){
+        val list = _state.value.lexicalTypes + listOf(lexicalType)
+        _state.value = _state.value.copy(lexicalTypes =  list.toSet().toList())
+    }
+
+    fun removeLexicalType(lexicalType: String){
+        val list = _state.value.lexicalTypes.filter { it != lexicalType }
+        _state.value = _state.value.copy(lexicalTypes =  list)
+    }
+
+    fun save(name: String, sound: String, phonetic: String){
+            //TODO
+    }
+
+    fun changeName(name: String){
+        _state.value = _state.value.copy(name = name)
     }
 }
