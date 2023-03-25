@@ -6,6 +6,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.github.wordsmemorizer.navigation.Routes
+import com.github.wordsmemorizer.ui.components.AddWordView
+import com.github.wordsmemorizer.ui.components.WMSpacer
+import com.github.wordsmemorizer.ui.components.WMTextField
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 
 @Composable
@@ -37,14 +41,12 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
         ) {
             Card(elevation = 4.dp) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        value = state.name,
-                        singleLine = true,
-                        shape = RoundedCornerShape(10),
-                        label = {
-                            Text(text = "Write your word")
-                        },
+                    WMTextField(
+                        text = state.name,
+                        hint = "Input word to add",
+                        onKeyboardAction = {
+                                           //TODO start searching
+                             },
                         onValueChange = { name ->
                             viewModel.changeName(name)
                         })
@@ -58,18 +60,19 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
                             elevation = ButtonDefaults.elevation(),
                             onClick = { /*TODO*/ }
                         ) {
-                            Icon(Icons.Default.Build, null)
-                            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
                             Text(text = "Fill fields by hand")
                         }
-                        Button(onClick = { /*TODO*/ },
-                            elevation = ButtonDefaults.elevation(),) {
-                            Icon(Icons.Default.Search, null, tint = Color.White)
+                        Button(
+                            onClick = { /*TODO*/ },
+                            elevation = ButtonDefaults.elevation(),
+                        ) {
                             Text(text = "Search")
                         }
                     }
                 }
             }
+            WMSpacer()
+            AddWordView(word = AddWordState(name = "name", sound = "sound", phonetic = "phonetic" ), onValueChanged = {})
 
         }
     }
