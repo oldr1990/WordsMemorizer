@@ -35,32 +35,42 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            OutlinedTextField(
-                value = state.name,
-                singleLine = true,
-                shape = RoundedCornerShape(10),
-                label = {
-                    Text(text = "Write your word")
-                },
-                onValueChange = { name ->
-                    viewModel.changeName(name)
-                })
-            Row(modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
-                OutlinedButton(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.Build, null)
-                    Text(text = "Create by yourself")
-                }
-                Button(onClick = { /*TODO*/ }) {
-                    Icon(Icons.Default.Search, null, tint = Color.White)
-                    Text(text = "Search")
+            Card(elevation = 4.dp) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    OutlinedTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = state.name,
+                        singleLine = true,
+                        shape = RoundedCornerShape(10),
+                        label = {
+                            Text(text = "Write your word")
+                        },
+                        onValueChange = { name ->
+                            viewModel.changeName(name)
+                        })
+                    Spacer(modifier = Modifier.padding(top = 16.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        OutlinedButton(
+                            elevation = ButtonDefaults.elevation(),
+                            onClick = { /*TODO*/ }
+                        ) {
+                            Icon(Icons.Default.Build, null)
+                            Spacer(modifier = Modifier.padding(horizontal = 8.dp))
+                            Text(text = "Fill fields by hand")
+                        }
+                        Button(onClick = { /*TODO*/ },
+                            elevation = ButtonDefaults.elevation(),) {
+                            Icon(Icons.Default.Search, null, tint = Color.White)
+                            Text(text = "Search")
+                        }
+                    }
                 }
             }
 
-            state.definitions.forEach { definition ->
-                TextButton(onClick = { viewModel.removeDefinition(definition) }) {
-                    Text(text = definition, modifier = Modifier.padding(16.dp))
-                }
-            }
         }
     }
 }
