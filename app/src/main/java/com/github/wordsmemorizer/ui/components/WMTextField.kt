@@ -28,7 +28,7 @@ fun WMTextField(
         singleLine = true,
         shape = RoundedCornerShape(8.dp),
         keyboardOptions = KeyboardOptions(imeAction = keyboardAction),
-        keyboardActions = KeyboardActions(onAny = { onKeyboardAction.invoke() }),
+        keyboardActions = KeyboardActions(onDone = { onKeyboardAction.invoke() }),
         label = {
             Text(text = hint)
         },

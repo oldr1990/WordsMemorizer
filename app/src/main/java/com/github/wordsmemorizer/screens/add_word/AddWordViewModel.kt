@@ -25,13 +25,11 @@ class AddWordViewModel @Inject constructor(
     }
 
     fun addLexicalType(lexicalType: String){
-        val list = _state.value.lexicalTypes + listOf(lexicalType)
-        _state.value = _state.value.copy(lexicalTypes =  list.toSet().toList())
+
     }
 
     fun removeLexicalType(lexicalType: String){
-        val list = _state.value.lexicalTypes.filter { it != lexicalType }
-        _state.value = _state.value.copy(lexicalTypes =  list)
+
     }
 
     fun save(name: String, sound: String, phonetic: String){
