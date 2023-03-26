@@ -1,28 +1,18 @@
 package com.github.wordsmemorizer.screens.add_word
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.github.wordsmemorizer.navigation.Routes
+import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.ui.components.AddWordView
-import com.github.wordsmemorizer.ui.components.WMSpacer
 import com.github.wordsmemorizer.ui.components.WMTextField
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 
@@ -32,47 +22,56 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
     Scaffold(topBar = {
         WMTopAppBar("Add Word", navController)
     }) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Card(elevation = 4.dp) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    WMTextField(
-                        text = state.name,
-                        hint = "Input word to add",
-                        onKeyboardAction = {
-                                           //TODO start searching
-                             },
-                        onValueChange = { name ->
-                            viewModel.changeName(name)
-                        })
-                    Spacer(modifier = Modifier.padding(top = 16.dp))
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        OutlinedButton(
-                            elevation = ButtonDefaults.elevation(),
-                            onClick = { /*TODO*/ }
+            item {
+                Card(elevation = 4.dp, modifier = Modifier.padding(vertical = 16.dp)) {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        WMTextField(
+                            text = state.name,
+                            hint = stringResource(id = R.string.input_word),
+                            onKeyboardAction = {
+                                //TODO start searching
+                            },
+                            onValueChange = { name ->
+                                viewModel.changeName(name)
+                            })
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            Text(text = "Fill fields by hand")
-                        }
-                        Button(
-                            onClick = { /*TODO*/ },
-                            elevation = ButtonDefaults.elevation(),
-                        ) {
-                            Text(text = "Search")
+                            OutlinedButton(
+                                elevation = ButtonDefaults.elevation(),
+                                onClick = { /*TODO*/ }
+                            ) {
+                                Text(text = stringResource(id = R.string.add_custom_word))
+                            }
+                            Button(
+                                onClick = { /*TODO*/ },
+                                elevation = ButtonDefaults.elevation(),
+                            ) {
+                                Text(text = stringResource(id = R.string.search_in_dictionary))
+                            }
                         }
                     }
                 }
             }
-            WMSpacer()
-            AddWordView(word = AddWordState(name = "name", sound = "sound", phonetic = "phonetic" ), onValueChanged = {})
+            item {
+                AddWordView(word = state) { wordState ->
+                    viewModel.changeWordState(wordState)
+                }
+            }
+            item {
+                Button(modifier = Modifier.padding(bottom = 16.dp), onClick = { viewModel.saveWord() }) {
+                    Text(text = stringResource(id = R.string.add_to_library), style = MaterialTheme.typography.h5)
+                }
+            }
 
         }
     }

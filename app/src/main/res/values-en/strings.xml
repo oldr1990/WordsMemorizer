@@ -5,5 +5,21 @@
     <string name="back">Back</string>
     <string name="add">Add</string>
     <string name="add_word">Add Word</string>
+    <string name="input_word">Input Word</string>
     <string name="delete">Delete Word</string>
+    <string name="word">Word</string>
+    <string name="phonetic">Phonetic</string>
+    <string name="search_in_dictionary">Search in dictionary</string>
+    <string name="add_custom_word">Add custom word</string>
+    <string name="link_to_sound">Link to sound</string>
+    <string name="lexical_catogories">Lexical categories</string>
+    <string name="noun">Noun</string>
+    <string name="verb">Verb</string>
+    <string name="adjective">Adjective</string>
+    <string name="adverb">Adverb</string>
+    <string name="proposition">Proposition</string>
+    <string name="definitions">Definitions:</string>
+    <string name="empty_definitions">There is no definitions</string>
+    <string name="inptu_definition">Input definition</string>
+    <string name="add_to_library">Add to library</string>
 </resources>

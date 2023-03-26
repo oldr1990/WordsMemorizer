@@ -16,12 +16,13 @@ import androidx.compose.ui.unit.dp
 fun WMTextField(
     text: String,
     hint: String,
+    modifier: Modifier = Modifier,
     onValueChange: (String) -> Unit,
     onKeyboardAction: () -> Unit = {},
     keyboardAction: ImeAction = ImeAction.Done,
 ) {
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp),
         value = text,

@@ -1,23 +1,22 @@
 package com.github.wordsmemorizer.ui.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.Chip
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.models.LexicalCategories
 import com.github.wordsmemorizer.screens.add_word.AddWordState
+import com.google.accompanist.flowlayout.FlowMainAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -26,15 +25,16 @@ fun AddWordView(
     word: AddWordState,
     onValueChanged: (AddWordState) -> Unit,
 ) {
-    Card(elevation = 4.dp) {
+    var definitionText by remember { mutableStateOf("") }
+    Card(elevation = 4.dp, modifier = modifier.padding(bottom = 16.dp)) {
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
             WMTextField(
                 text = word.name,
-                hint = "Word",
+                hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
                 onValueChange = {
                     onValueChanged(word.copy(name = it))
@@ -42,22 +42,113 @@ fun AddWordView(
             WMTextField(
                 text = word.phonetic,
                 keyboardAction = ImeAction.Next,
-                hint = "Phonetic",
+                hint = stringResource(id = R.string.phonetic),
                 onValueChange = {
                     onValueChanged(word.copy(phonetic = it))
                 })
-            WMTextField(text = word.sound, hint = "Link to Sound", onValueChange = {
-                onValueChanged(word.copy(phonetic = it))
-            })
-            Text(text = "Lexical Categories")
-            LazyRow(modifier = Modifier.padding(bottom = 16.dp)) {
-                items(LexicalCategories.values()) {
-                    Chip(
-                        modifier = Modifier.padding(end = if (it.ordinal == LexicalCategories.values().size -1) 0.dp else 16.dp),
-                        onClick = { onValueChanged(word.copy(lexicalTypes = word.lexicalTypes + it)) },
-                        enabled = word.lexicalTypes.contains(it)
+            WMTextField(
+                text = word.sound,
+                hint = stringResource(id = R.string.link_to_sound),
+                keyboardAction = ImeAction.Next,
+                onValueChange = {
+                    onValueChanged(word.copy(sound = it))
+                })
+            Text(
+                text = stringResource(id = R.string.lexical_catogories),
+                style = MaterialTheme.typography.h5
+            )
+            FlowRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                mainAxisSpacing = 8.dp,
+                crossAxisSpacing = (-8).dp,
+                mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
+                lastLineMainAxisAlignment = FlowMainAxisAlignment.Start
+            ) {
+                LexicalCategories.values().forEach {
+                    FilterChip(
+                        onClick = {
+                            onValueChanged(
+                                word.copy(
+                                    lexicalTypes = if (word.lexicalTypes.contains(it)) {
+                                        word.lexicalTypes - it
+                                    } else {
+                                        word.lexicalTypes + it
+                                    }
+                                )
+                            )
+                        },
+                        selected = word.lexicalTypes.contains(it),
+                        colors = ChipDefaults.filterChipColors(
+                            selectedBackgroundColor = MaterialTheme.colors.primary,
+                            selectedContentColor = MaterialTheme.colors.background,
+                        )
                     ) {
                         Text(text = it.name)
+                    }
+                }
+            }
+            Divider()
+            Text(
+                modifier = Modifier.padding(vertical = 16.dp),
+                text = stringResource(id = R.string.definitions),
+                style = MaterialTheme.typography.h6
+            )
+            Column(modifier = Modifier.fillMaxWidth()) {
+                if (word.definitions.isEmpty()) {
+                    Text(
+                        text = stringResource(id = R.string.empty_definitions),
+                        color = MaterialTheme.colors.primaryVariant,
+                        style = MaterialTheme.typography.h5
+                    )
+                } else {
+                    word.definitions.forEach {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(weight = 1f, fill = true),
+                                text = it,
+                                style = MaterialTheme.typography.h5,
+                                color = MaterialTheme.colors.primaryVariant,
+                            )
+                            IconButton(
+                                modifier = Modifier.padding(0.dp),
+                                onClick = { onValueChanged(word.copy(definitions = word.definitions - it)) }) {
+                                Icon(
+                                    Icons.Default.Delete,
+                                    contentDescription = stringResource(id = R.string.delete)
+                                )
+                            }
+                        }
+                    }
+                }
+                WMSpacer()
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    WMTextField(
+                        modifier = modifier
+                            .weight(weight = 1f, fill = true)
+                            .padding(end = 16.dp),
+                        text = definitionText,
+                        hint = stringResource(id = R.string.inptu_definition),
+                        onValueChange = { definitionText = it })
+                    Button(
+                        modifier = Modifier.padding(bottom = 12.dp),
+                        onClick = {
+                            if (definitionText.isNotEmpty()
+                                && !word.definitions.contains(definitionText)
+                            ) {
+                                onValueChanged(word.copy(definitions = word.definitions + definitionText))
+                                definitionText = ""
+                            }
+                        }) {
+                        Text(text = stringResource(id = R.string.add), maxLines = 1)
                     }
                 }
             }
