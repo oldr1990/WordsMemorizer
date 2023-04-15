@@ -6,8 +6,8 @@ import com.github.wordsmemorizer.models.Word
 
 @Database(
     entities = [Word::class],
-    version = 1
+    version = 2
 )
 abstract class MainRoomDatabase : RoomDatabase() {
-    abstract val wordDao: WordDao
+    abstract fun wordDao(): WordDao
 }

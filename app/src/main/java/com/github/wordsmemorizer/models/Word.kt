@@ -1,9 +1,10 @@
 package com.github.wordsmemorizer.models
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "words")
 data class Word(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
@@ -11,7 +12,9 @@ data class Word(
     val sound: String,
     val phonetic: String,
     val level: Int,
-    private val definitions: ArrayList<String>,
-    private val lexicalTypes: ArrayList<String>,
+    val definitions: ArrayList<String>,
+    @ColumnInfo(name = "lexical_types")
+    val lexicalTypes: ArrayList<String>,
+    @ColumnInfo(name = "last_time_shown")
     val lastTimeShown: Long,
 )

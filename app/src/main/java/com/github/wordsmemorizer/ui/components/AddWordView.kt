@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.models.LexicalCategories
+import com.github.wordsmemorizer.models.Word
 import com.github.wordsmemorizer.screens.add_word.AddWordState
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -22,8 +23,8 @@ import com.google.accompanist.flowlayout.FlowRow
 @Composable
 fun AddWordView(
     modifier: Modifier = Modifier,
-    word: AddWordState,
-    onValueChanged: (AddWordState) -> Unit,
+    word: Word,
+    onValueChanged: (Word) -> Unit,
 ) {
     var definitionText by remember { mutableStateOf("") }
     Card(elevation = 4.dp, modifier = modifier.padding(bottom = 16.dp)) {
@@ -71,15 +72,17 @@ fun AddWordView(
                         onClick = {
                             onValueChanged(
                                 word.copy(
-                                    lexicalTypes = if (word.lexicalTypes.contains(it)) {
-                                        word.lexicalTypes - it
-                                    } else {
-                                        word.lexicalTypes + it
-                                    }
+                                    lexicalTypes = ArrayList(
+                                        if (word.lexicalTypes.contains(it.name)) {
+                                            word.lexicalTypes - it.name
+                                        } else {
+                                            word.lexicalTypes + it.name
+                                        }
+                                    )
                                 )
                             )
                         },
-                        selected = word.lexicalTypes.contains(it),
+                        selected = word.lexicalTypes.contains(it.name),
                         colors = ChipDefaults.filterChipColors(
                             selectedBackgroundColor = MaterialTheme.colors.primary,
                             selectedContentColor = MaterialTheme.colors.background,
@@ -116,7 +119,7 @@ fun AddWordView(
                             )
                             IconButton(
                                 modifier = Modifier.padding(0.dp),
-                                onClick = { onValueChanged(word.copy(definitions = word.definitions - it)) }) {
+                                onClick = { onValueChanged(word.copy(definitions = ArrayList(word.definitions - it))) }) {
                                 Icon(
                                     Icons.Default.Delete,
                                     contentDescription = stringResource(id = R.string.delete)
@@ -137,14 +140,22 @@ fun AddWordView(
                             .padding(end = 16.dp),
                         text = definitionText,
                         hint = stringResource(id = R.string.inptu_definition),
-                        onValueChange = { definitionText = it })
+                        onValueChange = { definitionText = it },
+                        onKeyboardAction = {
+                            if (definitionText.isNotEmpty()
+                                && !word.definitions.contains(definitionText)
+                            ) {
+                                onValueChanged(word.copy(definitions = ArrayList(word.definitions + definitionText)))
+                                definitionText = ""
+                            }
+                        })
                     Button(
                         modifier = Modifier.padding(bottom = 12.dp),
                         onClick = {
                             if (definitionText.isNotEmpty()
                                 && !word.definitions.contains(definitionText)
                             ) {
-                                onValueChanged(word.copy(definitions = word.definitions + definitionText))
+                                onValueChanged(word.copy(definitions = ArrayList(word.definitions + definitionText)))
                                 definitionText = ""
                             }
                         }) {

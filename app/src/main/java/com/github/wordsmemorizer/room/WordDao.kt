@@ -18,6 +18,6 @@ interface WordDao {
     @Query("SELECT * FROM word ORDER BY level ASC LIMIT 10")
     fun getWordsSortedByLevel(): List<Word>
 
-    @Query("SELECT * FROM word ORDER BY lastTimeShown ASC LIMIT 10")
-    fun getWordsSortedByDate(): List<Word>
+    @Query("SELECT * FROM word ORDER last_time_shown < :time")
+    fun getWordsSortedByDate(time: Long): List<Word>
 }
