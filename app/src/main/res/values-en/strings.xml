@@ -22,4 +22,5 @@
     <string name="empty_definitions">There is no definitions</string>
     <string name="inptu_definition">Input definition</string>
     <string name="add_to_library">Add to library</string>
+    <string name="translation">Translation</string>
 </resources>

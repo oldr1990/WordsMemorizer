@@ -7,14 +7,6 @@ import java.util.*
 
 data class AddWordState(
     val search: String = "",
-    val word: Word = Word(
-        name = "",
-        sound = "",
-        level = 0,
-        definitions = arrayListOf(),
-        phonetic = "",
-        lexicalTypes = arrayListOf(),
-        lastTimeShown = Date().time
-    ),
+    val word: Word = Word(name = ""),
     val isLoading: Boolean = false,
 )

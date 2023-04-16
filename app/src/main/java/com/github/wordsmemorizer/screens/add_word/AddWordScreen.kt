@@ -43,10 +43,10 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
                             text = state.search,
                             hint = stringResource(id = R.string.input_word),
                             onKeyboardAction = {
-                                //TODO start searching
+                                viewModel.changeSearch(state.search)
                             },
-                            onValueChange = { name ->
-                                viewModel.changeSearch(name)
+                            onValueChange = { search ->
+                                viewModel.changeSearch(search)
                             })
                         Row(
                             modifier = Modifier

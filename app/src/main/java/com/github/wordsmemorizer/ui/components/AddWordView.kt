@@ -41,6 +41,13 @@ fun AddWordView(
                     onValueChanged(word.copy(name = it))
                 })
             WMTextField(
+                text = word.translation,
+                hint = stringResource(id = R.string.translation),
+                keyboardAction = ImeAction.Next,
+                onValueChange = {
+                    onValueChanged(word.copy(translation = it))
+                })
+            WMTextField(
                 text = word.phonetic,
                 keyboardAction = ImeAction.Next,
                 hint = stringResource(id = R.string.phonetic),

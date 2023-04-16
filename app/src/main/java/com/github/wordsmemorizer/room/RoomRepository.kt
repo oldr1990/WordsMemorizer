@@ -6,10 +6,10 @@ import javax.inject.Inject
 class RoomRepository @Inject constructor(private val dao: WordDao) {
 
     suspend fun addWordToLibrary(word: Word){
-       // dao.upsertWord(word)
+        dao.upsertWord(word)
     }
 
     suspend fun deleteWordFromLibrary(word: Word){
-       // dao.deleteWord(word)
+        dao.deleteWord(word)
     }
 }

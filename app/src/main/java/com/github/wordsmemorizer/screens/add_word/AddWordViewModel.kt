@@ -15,7 +15,7 @@ import kotlin.time.Duration.Companion.seconds
 @HiltViewModel
 class AddWordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-   // private val roomRepository: RoomRepository
+    private val roomRepository: RoomRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(AddWordState())
@@ -39,7 +39,7 @@ class AddWordViewModel @Inject constructor(
 
     fun saveWord(){
         viewModelScope.launch {
-           // roomRepository.addWordToLibrary(state.value.word)
+            roomRepository.addWordToLibrary(state.value.word)
         }
     }
 }

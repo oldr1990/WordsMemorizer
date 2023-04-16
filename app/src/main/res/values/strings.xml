@@ -21,4 +21,5 @@
     <string name="empty_definitions">Нет добавленных определений</string>
     <string name="inptu_definition">Введите определение</string>
     <string name="add_to_library">Добавить в библиотеку</string>
+    <string name="translation">Перевод</string>
 </resources>

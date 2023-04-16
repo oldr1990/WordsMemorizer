@@ -15,9 +15,9 @@ interface WordDao {
     @Delete
     suspend fun deleteWord(word: Word)
 
-    @Query("SELECT * FROM word ORDER BY level ASC LIMIT 10")
+    @Query("SELECT * FROM words ORDER BY level ASC LIMIT 10")
     fun getWordsSortedByLevel(): List<Word>
 
-    @Query("SELECT * FROM word ORDER last_time_shown < :time")
-    fun getWordsSortedByDate(time: Long): List<Word>
+    @Query("SELECT * FROM words WHERE last_time_shown < :time")
+    fun getWordsOlderThan(time: Long): List<Word>
 }
