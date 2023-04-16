@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.models.LexicalCategories
 import com.github.wordsmemorizer.models.Word
-import com.github.wordsmemorizer.screens.add_word.AddWordState
+import com.github.wordsmemorizer.utils.removeSpecialCharacters
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 
@@ -37,29 +37,33 @@ fun AddWordView(
                 text = word.name,
                 hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
+                maximumCharacters = 50,
                 onValueChange = {
-                    onValueChanged(word.copy(name = it))
-                })
+                    onValueChanged(word.copy(name = it.removeSpecialCharacters()))
+                },
+            )
             WMTextField(
                 text = word.translation,
                 hint = stringResource(id = R.string.translation),
                 keyboardAction = ImeAction.Next,
+                maximumCharacters = 50,
                 onValueChange = {
-                    onValueChanged(word.copy(translation = it))
+                    onValueChanged(word.copy(translation = it.removeSpecialCharacters()))
                 })
             WMTextField(
                 text = word.phonetic,
                 keyboardAction = ImeAction.Next,
                 hint = stringResource(id = R.string.phonetic),
+                maximumCharacters = 50,
                 onValueChange = {
-                    onValueChanged(word.copy(phonetic = it))
+                    onValueChanged(word.copy(phonetic = it.removeSpecialCharacters()))
                 })
             WMTextField(
                 text = word.sound,
                 hint = stringResource(id = R.string.link_to_sound),
                 keyboardAction = ImeAction.Next,
                 onValueChange = {
-                    onValueChanged(word.copy(sound = it))
+                    onValueChanged(word.copy(sound = it.removeSpecialCharacters()))
                 })
             Text(
                 text = stringResource(id = R.string.lexical_catogories),
@@ -147,7 +151,8 @@ fun AddWordView(
                             .padding(end = 16.dp),
                         text = definitionText,
                         hint = stringResource(id = R.string.inptu_definition),
-                        onValueChange = { definitionText = it },
+                        maximumCharacters = 50,
+                        onValueChange = { definitionText = it.removeSpecialCharacters() },
                         onKeyboardAction = {
                             if (definitionText.isNotEmpty()
                                 && !word.definitions.contains(definitionText)

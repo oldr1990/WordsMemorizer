@@ -20,6 +20,8 @@ fun WMTextField(
     onValueChange: (String) -> Unit,
     onKeyboardAction: () -> Unit = {},
     keyboardAction: ImeAction = ImeAction.Done,
+    maximumCharacters: Int = 100,
+    isError: Boolean = false
 ) {
     OutlinedTextField(
         modifier = modifier
@@ -33,6 +35,7 @@ fun WMTextField(
         label = {
             Text(text = hint)
         },
-        onValueChange = onValueChange
+        onValueChange = { onValueChange(it.take(maximumCharacters)) },
+        isError = isError,
     )
 }

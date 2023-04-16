@@ -20,6 +20,7 @@ import com.github.wordsmemorizer.ui.components.AddWordView
 import com.github.wordsmemorizer.ui.components.WMProgressBar
 import com.github.wordsmemorizer.ui.components.WMTextField
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
+import com.github.wordsmemorizer.utils.removeSpecialCharacters
 
 @Composable
 fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hiltViewModel()) {
@@ -46,8 +47,10 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
                                 viewModel.changeSearch(state.search)
                             },
                             onValueChange = { search ->
-                                viewModel.changeSearch(search)
-                            })
+                                viewModel.changeSearch(search.removeSpecialCharacters())
+                            },
+                            maximumCharacters = 50,
+                        )
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -95,6 +98,6 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
                 }
             }
         }
-    if (state.isLoading) WMProgressBar()
+        if (state.isLoading) WMProgressBar()
     }
 }
