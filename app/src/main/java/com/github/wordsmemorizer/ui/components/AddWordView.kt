@@ -37,7 +37,6 @@ fun AddWordView(
                 text = word.name,
                 hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
-                maximumCharacters = 50,
                 onValueChange = {
                     onValueChanged(word.copy(name = it.removeSpecialCharacters()))
                 },
@@ -46,7 +45,6 @@ fun AddWordView(
                 text = word.translation,
                 hint = stringResource(id = R.string.translation),
                 keyboardAction = ImeAction.Next,
-                maximumCharacters = 50,
                 onValueChange = {
                     onValueChanged(word.copy(translation = it.removeSpecialCharacters()))
                 })
@@ -54,7 +52,6 @@ fun AddWordView(
                 text = word.phonetic,
                 keyboardAction = ImeAction.Next,
                 hint = stringResource(id = R.string.phonetic),
-                maximumCharacters = 50,
                 onValueChange = {
                     onValueChanged(word.copy(phonetic = it.removeSpecialCharacters()))
                 })
@@ -62,6 +59,7 @@ fun AddWordView(
                 text = word.sound,
                 hint = stringResource(id = R.string.link_to_sound),
                 keyboardAction = ImeAction.Next,
+                maximumCharacters = 100,
                 onValueChange = {
                     onValueChanged(word.copy(sound = it.removeSpecialCharacters()))
                 })
@@ -151,7 +149,6 @@ fun AddWordView(
                             .padding(end = 16.dp),
                         text = definitionText,
                         hint = stringResource(id = R.string.inptu_definition),
-                        maximumCharacters = 50,
                         onValueChange = { definitionText = it.removeSpecialCharacters() },
                         onKeyboardAction = {
                             if (definitionText.isNotEmpty()

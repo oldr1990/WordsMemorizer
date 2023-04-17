@@ -8,6 +8,6 @@ import kotlinx.parcelize.Parcelize
 data class TranslationResponse(
     val id: String,
     val metadata: Metadata,
-    val results: List<Result>,
+    val results: List<OxfordResult>,
     val word: String
 ):Parcelable

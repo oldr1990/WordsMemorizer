@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 
 @Parcelize
-data class Result(
+data class OxfordResult(
     val id: String,
     val language: String,
     val lexicalEntries: List<LexicalEntry>,

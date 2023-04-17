@@ -48,8 +48,7 @@ fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hi
                             },
                             onValueChange = { search ->
                                 viewModel.changeSearch(search.removeSpecialCharacters())
-                            },
-                            maximumCharacters = 50,
+                            }
                         )
                         Row(
                             modifier = Modifier

@@ -20,7 +20,7 @@ fun WMTextField(
     onValueChange: (String) -> Unit,
     onKeyboardAction: () -> Unit = {},
     keyboardAction: ImeAction = ImeAction.Done,
-    maximumCharacters: Int = 100,
+    maximumCharacters: Int = 50,
     isError: Boolean = false
 ) {
     OutlinedTextField(
