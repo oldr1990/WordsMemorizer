@@ -1,22 +1,18 @@
 package com.github.wordsmemorizer.network.oxford
 
 import com.github.wordsmemorizer.models.response.TranslationResponse
-import com.github.wordsmemorizer.network.oxfordApi
-import com.github.wordsmemorizer.network.oxfordAppKey
+import com.github.wordsmemorizer.network.oxfordApiKey
+import com.github.wordsmemorizer.network.oxfordAppId
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 
 interface OxfordApi {
-    @Headers(
-        "Accept: application/json",
-        "app_id: $oxfordAppKey",
-        "app_key: $oxfordApi"
-    )
-    @GET("/api/v2/entries/en-us/")
+    @GET("/api/v2/entries/en-us/{word}")
     suspend fun searchWord(
-        word: String,
+        @Path("word") word: String,
         @Query("strictMatch") strictMatch: Boolean = false
     ): TranslationResponse
 }
