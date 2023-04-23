@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.github.wordsmemorizer.models.Word
 import com.github.wordsmemorizer.network.oxford.OxfordRepository
 import com.github.wordsmemorizer.room.RoomRepository
+import com.github.wordsmemorizer.screens.BaseViewModel
+import com.github.wordsmemorizer.screens.ScreenEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
@@ -18,27 +20,25 @@ class AddWordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val roomRepository: RoomRepository,
     private val oxfordRepository: OxfordRepository
-) : ViewModel() {
+) : BaseViewModel<AddWordState>(AddWordState()) {
 
-    private val _state = MutableStateFlow(AddWordState())
-    val state = _state.asStateFlow()
-
-    fun changeWord(wordState: Word){
-        _state.value = _state.value.copy(word = wordState)
+    fun changeWord(wordState: Word) {
+        updateState(state.value.copy(word = wordState))
     }
 
-    fun changeSearch(name: String){
-        _state.value = _state.value.copy(search = name)
+    fun changeSearch(name: String) {
+        updateState(state.value.copy(search = name))
     }
 
-    fun searchInDictionary(){
-        _state.value = _state.value.copy(isLoading = true)
+    fun searchInDictionary() {
+        loading(true)
         viewModelScope.launch {
-          oxfordRepository.searchWord(state.value.search)
+            val result = oxfordRepository.searchWord(state.value.search)
+        loading(false)
         }
     }
 
-    fun saveWord(){
+    fun saveWord() {
         viewModelScope.launch {
             roomRepository.addWordToLibrary(state.value.word)
         }

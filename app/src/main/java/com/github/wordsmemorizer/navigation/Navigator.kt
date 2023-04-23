@@ -10,11 +10,11 @@ import com.github.wordsmemorizer.screens.home.HomeScreen
 
 @Composable
 fun Navigator(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = Routes.HOME){
-        composable(Routes.HOME){
+    NavHost(navController = navController, startDestination = HomeRoute.getRoute()){
+        composable(HomeRoute.getRoute()){
             HomeScreen(navController = navController)
         }
-        composable(Routes.ADD_CARD){
+        composable(AddWordRoute.getRoute()){
             AddWordScreen(navController = navController)
         }
     }

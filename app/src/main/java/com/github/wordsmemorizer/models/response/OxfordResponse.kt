@@ -5,7 +5,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class TranslationResponse(
+data class OxfordResponse(
     val id: String,
     val metadata: Metadata,
     val results: List<OxfordResult>,

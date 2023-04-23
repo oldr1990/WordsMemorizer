@@ -15,7 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.github.wordsmemorizer.R
-import com.github.wordsmemorizer.navigation.Routes
+import com.github.wordsmemorizer.navigation.AddWordRoute
+import com.github.wordsmemorizer.navigation.toRoute
 import com.github.wordsmemorizer.screens.comosables.WMBottomAppBar
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 import kotlinx.coroutines.CoroutineScope
@@ -32,7 +33,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
         isFloatingActionButtonDocked = true,
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(Routes.ADD_CARD) },
+                onClick = { navController.toRoute(AddWordRoute)},
                 elevation = FloatingActionButtonDefaults.elevation(4.dp)
             ) {
                 Icon(
@@ -46,7 +47,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel = hi
             }
         },
         topBar = {
-            WMTopAppBar("Burning Words", navController, false)
+            WMTopAppBar(R.string.app_name, navController)
         },
         bottomBar = {
             WMBottomAppBar()

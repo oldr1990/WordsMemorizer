@@ -12,15 +12,16 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 
 @Composable
-fun WMTopAppBar(title: String, navController: NavController, isNotHomePage: Boolean = true) {
+fun WMTopAppBar(title: Int, navController: NavController) {
     TopAppBar(elevation = 4.dp) {
-        if (isNotHomePage) {
+        if (navController.previousBackStackEntry != null) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = null,
@@ -34,7 +35,7 @@ fun WMTopAppBar(title: String, navController: NavController, isNotHomePage: Bool
         Text(
             modifier = Modifier.padding(start = 16.dp),
             color = Color.White,
-            text = title,
+            text = stringResource(id = title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
         )
