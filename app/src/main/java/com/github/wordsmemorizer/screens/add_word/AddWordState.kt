@@ -7,6 +7,5 @@ import java.util.*
 
 data class AddWordState(
     val search: String = "",
-    val word: Word = Word(name = ""),
-    val isLoading: Boolean = false,
+    val word: Word = Word(name = "")
 )

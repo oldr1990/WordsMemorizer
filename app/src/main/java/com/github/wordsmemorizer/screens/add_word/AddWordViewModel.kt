@@ -31,10 +31,8 @@ class AddWordViewModel @Inject constructor(
     }
 
     fun searchInDictionary() {
-        loading(true)
-        viewModelScope.launch {
-            val result = oxfordRepository.searchWord(state.value.search)
-        loading(false)
+        startRequest({ oxfordRepository.searchWord(state.value.search) }) {
+            updateState(state.value.copy(word = it))
         }
     }
 

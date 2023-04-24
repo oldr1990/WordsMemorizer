@@ -3,12 +3,16 @@ package com.github.wordsmemorizer.screens
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.navigation.Routes
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.github.wordsmemorizer.network.Response
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.net.ConnectException
+import java.net.UnknownHostException
+import javax.net.ssl.SSLHandshakeException
+
 
 open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
     private val _state = MutableStateFlow(initialState)
@@ -19,9 +23,16 @@ open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
 
     fun showMessage(message: String) {
         viewModelScope.launch {
-            _screenEvent.emit(ScreenEvent.Snackbar(message))
+            _screenEvent.emit(ScreenEvent.Snackbar(SnackbarMessage.FromString(message)))
         }
     }
+
+    fun showMessage(resource: Int) {
+        viewModelScope.launch {
+            _screenEvent.emit(ScreenEvent.Snackbar(SnackbarMessage.FromResource(resource)))
+        }
+    }
+
 
     fun updateState(state: T) {
         viewModelScope.launch {
@@ -41,11 +52,59 @@ open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
         }
     }
 
-    fun  navigate(route: Routes<Any>, arguments: Any?) {
+    fun navigate(route: Routes<Any>, arguments: Any?) {
         viewModelScope.launch {
             _screenEvent.emit(
                 ScreenEvent.Navigate(NavigationAction.GoTo(route, arguments))
             )
+        }
+    }
+
+    fun <R> startRequest(
+        request: suspend () -> Response<R>,
+        onError: (Exception) -> Unit = {},
+        onSuccess: (R) -> Unit
+    ) {
+        viewModelScope.launch {
+            loading(true)
+            try {
+                val result = request()
+                    loading(false)
+                    when (result) {
+                        is Response.Error -> {
+                            onError(result.exception)
+                            errorHandler(result.exception)
+                        }
+                        is Response.Success -> {
+                            onSuccess(result.data)
+                        }
+                    }
+
+            } catch (e: java.lang.Exception) {
+                loading(false)
+                errorHandler(e)
+            }
+        }
+    }
+
+    fun errorHandler(e: Exception) {
+        when (e) {
+            is SSLHandshakeException -> {
+                showMessage(R.string.error_sslhandshake)
+            }
+            is ConnectException -> {
+                showMessage(R.string.error_no_internet_connection)
+            }
+            is UnknownHostException -> {
+                showMessage(R.string.error_no_internet_connection)
+            }
+            else -> {
+                if (e.message == null) {
+                    showMessage(R.string.default_error)
+                } else {
+                    showMessage(e.message!!)
+                }
+            }
         }
     }
 }

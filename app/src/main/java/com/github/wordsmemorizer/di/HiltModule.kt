@@ -2,13 +2,13 @@ package com.github.wordsmemorizer.di
 
 import android.content.Context
 import androidx.room.Room
-import com.github.wordsmemorizer.network.Response
 import com.github.wordsmemorizer.network.oxford.OxfordApi
 import com.github.wordsmemorizer.network.oxfordApiKey
 import com.github.wordsmemorizer.network.oxfordAppId
 import com.github.wordsmemorizer.network.oxfordBaseUrl
 import com.github.wordsmemorizer.room.MainRoomDatabase
 import com.github.wordsmemorizer.room.WordDao
+import com.github.wordsmemorizer.utils.isConnected
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,12 +16,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 @InstallIn(SingletonComponent::class)
 @Module
@@ -37,7 +38,7 @@ object HiltModule {
     fun providesDao(database: MainRoomDatabase): WordDao = database.wordDao()
 
     @Provides
-    fun providesHttpClient(): OkHttpClient {
+    fun providesHttpClient(@ApplicationContext context: Context): OkHttpClient {
         val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().apply {
                 level = HttpLoggingInterceptor.Level.BODY
@@ -52,6 +53,8 @@ object HiltModule {
                     .build()
                 it.proceed(newRequest)
             })
+            .callTimeout(10.seconds.toJavaDuration())
+            .connectTimeout(3.seconds.toJavaDuration())
             .build()
         return client
     }
