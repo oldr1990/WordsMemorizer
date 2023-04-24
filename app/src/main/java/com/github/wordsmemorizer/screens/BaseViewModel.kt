@@ -6,9 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.navigation.Routes
 import com.github.wordsmemorizer.network.Response
-import kotlinx.coroutines.awaitAll
+import com.github.wordsmemorizer.utils.parseError
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.json.JSONObject
+import retrofit2.HttpException
 import java.net.ConnectException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
@@ -68,17 +70,17 @@ open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
         viewModelScope.launch {
             loading(true)
             try {
-                val result = request()
-                    loading(false)
-                    when (result) {
-                        is Response.Error -> {
-                            onError(result.exception)
-                            errorHandler(result.exception)
-                        }
-                        is Response.Success -> {
-                            onSuccess(result.data)
-                        }
+                val result = request.invoke()
+                loading(false)
+                when (result) {
+                    is Response.Error -> {
+                        onError(result.exception)
+                        errorHandler(result.exception)
                     }
+                    is Response.Success -> {
+                        onSuccess(result.data)
+                    }
+                }
 
             } catch (e: java.lang.Exception) {
                 loading(false)
@@ -89,6 +91,14 @@ open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
 
     fun errorHandler(e: Exception) {
         when (e) {
+            is HttpException -> {
+                val message = parseError(e)
+                if (message.isNotEmpty()) {
+                    showMessage(message)
+                } else {
+                    showMessage(R.string.default_error)
+                }
+            }
             is SSLHandshakeException -> {
                 showMessage(R.string.error_sslhandshake)
             }
