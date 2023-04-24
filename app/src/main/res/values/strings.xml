@@ -8,7 +8,7 @@
     <string name="delete">Удавлить</string>
     <string name="word">Слово</string>
     <string name="phonetic">Произношение</string>
-    <string name="search_in_dictionary">Поиск по словарю</string>
+    <string name="search_in_dictionary">Поиск</string>
     <string name="add_custom_word">Добавить в ручную</string>
     <string name="link_to_sound">Ссылка на звук</string>
     <string name="lexical_catogories">Часть речи</string>

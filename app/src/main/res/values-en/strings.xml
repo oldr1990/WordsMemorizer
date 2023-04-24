@@ -9,7 +9,7 @@
     <string name="delete">Delete Word</string>
     <string name="word">Word</string>
     <string name="phonetic">Phonetic</string>
-    <string name="search_in_dictionary">Search in dictionary</string>
+    <string name="search_in_dictionary">Search</string>
     <string name="add_custom_word">Add custom word</string>
     <string name="link_to_sound">Link to sound</string>
     <string name="lexical_catogories">Lexical categories</string>
