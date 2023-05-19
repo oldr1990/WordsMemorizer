@@ -103,37 +103,52 @@ fun AddWordView(
             }
             Divider()
             Text(
-                modifier = Modifier.padding(vertical = 16.dp),
+                modifier = Modifier.padding(top = 16.dp),
                 text = stringResource(id = R.string.definitions),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h5
             )
             Column(modifier = Modifier.fillMaxWidth()) {
                 if (word.definitions.isEmpty()) {
                     Text(
+                        modifier = Modifier.padding(top = 16.dp),
                         text = stringResource(id = R.string.empty_definitions),
                         color = MaterialTheme.colors.primaryVariant,
                         style = MaterialTheme.typography.h5
                     )
                 } else {
                     word.definitions.forEach {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                modifier = Modifier.weight(weight = 1f, fill = true),
-                                text = it,
-                                style = MaterialTheme.typography.h5,
-                                color = MaterialTheme.colors.primaryVariant,
-                            )
-                            IconButton(
-                                modifier = Modifier.padding(0.dp),
-                                onClick = { onValueChanged(word.copy(definitions = ArrayList(word.definitions - it))) }) {
-                                Icon(
-                                    Icons.Default.Delete,
-                                    contentDescription = stringResource(id = R.string.delete)
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    modifier = Modifier.weight(weight = 1f, fill = true),
+                                    text = it,
+                                    style = MaterialTheme.typography.h5,
+                                    color = MaterialTheme.colors.primaryVariant,
                                 )
+                                IconButton(
+                                    modifier = Modifier.padding(0.dp),
+                                    onClick = {
+                                        onValueChanged(
+                                            word.copy(
+                                                definitions = ArrayList(
+                                                    word.definitions - it
+                                                )
+                                            )
+                                        )
+                                    }) {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = stringResource(id = R.string.delete)
+                                    )
+                                }
                             }
+                            Divider()
                         }
                     }
                 }
