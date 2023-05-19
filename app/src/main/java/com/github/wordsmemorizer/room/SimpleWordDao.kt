@@ -25,4 +25,6 @@ interface SimpleWordDao {
 
     @Query("SELECT * FROM simple_word WHERE word = :word  LIMIT 1")
     suspend fun searchWord(word: String): List<SimpleWord>
+    @Query("SELECT * FROM simple_word WHERE id = :id")
+    suspend fun getWord(id: Int): List<SimpleWord>
 }

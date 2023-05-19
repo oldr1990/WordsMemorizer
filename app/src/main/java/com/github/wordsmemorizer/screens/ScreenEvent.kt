@@ -10,6 +10,6 @@ sealed class ScreenEvent {
 }
 
 sealed class NavigationAction{
-     class GoTo (val route: Routes<Any>, val arguments: Any?): NavigationAction()
+     class GoTo (val route: Routes): NavigationAction()
     object PopUp: NavigationAction()
 }

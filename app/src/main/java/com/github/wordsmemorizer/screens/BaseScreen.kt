@@ -6,7 +6,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavController
-import com.github.wordsmemorizer.navigation.toRoute
 import com.github.wordsmemorizer.screens.ScreenEvent.*
 import com.github.wordsmemorizer.screens.SnackbarMessage.*
 import com.github.wordsmemorizer.ui.components.WMProgressBar
@@ -29,7 +28,7 @@ fun <T> BaseScreen(
                 is Navigate -> {
                     when (it.action) {
                         is NavigationAction.GoTo -> {
-                            navController.toRoute(it.action.route, it.action.arguments)
+                            navController.navigate(it.action.route.route)
                         }
                         NavigationAction.PopUp -> navController.popBackStack()
                     }

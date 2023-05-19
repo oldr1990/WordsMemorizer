@@ -12,8 +12,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import com.github.wordsmemorizer.R
+import com.github.wordsmemorizer.navigation.Routes
 import com.github.wordsmemorizer.screens.BaseScreen
 import com.github.wordsmemorizer.screens.ScreenEvent
 import com.github.wordsmemorizer.ui.components.AddWordView
@@ -22,7 +24,13 @@ import com.github.wordsmemorizer.ui.components.WMTextField
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 import com.github.wordsmemorizer.utils.removeSpecialCharacters
 import kotlinx.coroutines.flow.collect
-
+class AddWordRoute : Routes {
+    override val route = "add_card/"
+    @Composable
+    override fun Builder(entry: NavBackStackEntry, navController: NavController){
+        AddWordScreen(navController = navController)
+    }
+}
 @Composable
 fun AddWordScreen(navController: NavController, viewModel: AddWordViewModel = hiltViewModel()) {
     val state = viewModel.state.collectAsStateWithLifecycle().value

@@ -1,6 +1,7 @@
 package com.github.wordsmemorizer.screens
 
 
+import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.wordsmemorizer.R
@@ -19,7 +20,7 @@ import javax.net.ssl.SSLHandshakeException
 open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
-
+    var arguments: Bundle? = null
     private val _screenEvent = MutableSharedFlow<ScreenEvent>()
     val screenEvent = _screenEvent.asSharedFlow()
 
@@ -54,10 +55,10 @@ open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
         }
     }
 
-    fun navigate(route: Routes<Any>, arguments: Any?) {
+    fun navigate(route: Routes) {
         viewModelScope.launch {
             _screenEvent.emit(
-                ScreenEvent.Navigate(NavigationAction.GoTo(route, arguments))
+                ScreenEvent.Navigate(NavigationAction.GoTo(route))
             )
         }
     }

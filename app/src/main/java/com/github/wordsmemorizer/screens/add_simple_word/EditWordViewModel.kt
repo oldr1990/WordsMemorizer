@@ -10,11 +10,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddSimpleWordViewModel@Inject constructor(
+class EditWordViewModel@Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val roomRepository: SimpleWordRepository
 ) : BaseViewModel<SimpleWord>(SimpleWord()) {
-
+    var id: Int? = null
     fun saveWord(){
         viewModelScope.launch {
             if (roomRepository.wordNotExist(state.value.word)) {
@@ -28,6 +28,17 @@ class AddSimpleWordViewModel@Inject constructor(
     fun deleteWord(){
         viewModelScope.launch {
             roomRepository.deleteWord(state.value)
+        }
+    }
+
+    fun onWordChanged(word: String){
+        viewModelScope.launch{
+           updateState(state.value.copy(word = word))
+        }
+    }
+    fun onAnswerChanged(answer: String){
+        viewModelScope.launch{
+           updateState(state.value.copy(answer = answer))
         }
     }
 }
