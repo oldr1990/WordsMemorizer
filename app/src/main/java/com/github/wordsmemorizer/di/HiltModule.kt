@@ -7,6 +7,7 @@ import com.github.wordsmemorizer.network.oxfordApiKey
 import com.github.wordsmemorizer.network.oxfordAppId
 import com.github.wordsmemorizer.network.oxfordBaseUrl
 import com.github.wordsmemorizer.room.MainRoomDatabase
+import com.github.wordsmemorizer.room.SimpleWordDao
 import com.github.wordsmemorizer.room.WordDao
 import com.github.wordsmemorizer.utils.isConnected
 import dagger.Module
@@ -35,7 +36,10 @@ object HiltModule {
 
     @Provides
     @Singleton
-    fun providesDao(database: MainRoomDatabase): WordDao = database.wordDao()
+    fun providesWordDao(database: MainRoomDatabase): WordDao = database.wordDao()
+ @Provides
+    @Singleton
+    fun providesSimpleWordDao(database: MainRoomDatabase): SimpleWordDao = database.simpleWordDao()
 
     @Provides
     fun providesHttpClient(@ApplicationContext context: Context): OkHttpClient {
