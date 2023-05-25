@@ -1,29 +1,24 @@
 package com.github.wordsmemorizer.navigation
 
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
+import com.github.wordsmemorizer.screens.edit_word.EditWordScreen
+import com.github.wordsmemorizer.screens.add_word.AddWordRoute
+import com.github.wordsmemorizer.screens.home.HomeRoute
 
-interface Routes<T> {
+interface Routes {
     val route: String
-    fun getRoute(arguments: T? = null): String =
-        if (arguments == null) {
-            route
-        } else {
-            converter(arguments)
-        }
-
-    fun converter(arguments: T?): String = route
+    @Composable
+    fun Builder(entry: NavBackStackEntry, navController: NavController)
 }
 
-
-fun <T> NavController.toRoute(route: Routes<T>, arguments: T? = null) {
-    this.navigate(route.getRoute(arguments))
+fun  NavController.toRoute(route: Routes) {
+    this.navigate(route.route)
 }
 
-object HomeRoute : Routes<String> {
-    override val route = "home"
-}
-
-object AddWordRoute : Routes<String> {
-    override val route = "add_card/"
-    override fun converter(arguments: String?): String = route + arguments.orEmpty()
-}
+val navigation = listOf(
+    HomeRoute(),
+    AddWordRoute(),
+    EditWordScreen(),
+)

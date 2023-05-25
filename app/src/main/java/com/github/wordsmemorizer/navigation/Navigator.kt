@@ -5,17 +5,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.github.wordsmemorizer.screens.add_word.AddWordScreen
-import com.github.wordsmemorizer.screens.home.HomeScreen
+import com.github.wordsmemorizer.screens.home.HomeRoute
 
 @Composable
 fun Navigator(navController: NavHostController = rememberNavController()) {
-    NavHost(navController = navController, startDestination = HomeRoute.getRoute()){
-        composable(HomeRoute.getRoute()){
-            HomeScreen(navController = navController)
-        }
-        composable(AddWordRoute.getRoute()){
-            AddWordScreen(navController = navController)
+    NavHost(navController = navController, startDestination = HomeRoute().route){
+        navigation.forEach { route ->
+            composable(route.route){
+                route.Builder(entry = it, navController = navController)
+            }
         }
     }
 }

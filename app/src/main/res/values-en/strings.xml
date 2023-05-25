@@ -9,6 +9,7 @@
     <string name="delete">Delete Word</string>
     <string name="word">Word</string>
     <string name="phonetic">Phonetic</string>
+    <string name="hint">Hint</string>
     <string name="search_in_dictionary">Search</string>
     <string name="add_custom_word">Add custom word</string>
     <string name="link_to_sound">Link to sound</string>
@@ -18,7 +19,7 @@
     <string name="adjective">Adjective</string>
     <string name="adverb">Adverb</string>
     <string name="proposition">Proposition</string>
-    <string name="definitions">Definitions:</string>
+    <string name="definition">Definition</string>
     <string name="empty_definitions">There is no definitions</string>
     <string name="inptu_definition">Input definition</string>
     <string name="add_to_library">Add to library</string>
@@ -26,4 +27,7 @@
     <string name="default_error">Something went wrong</string>
     <string name="error_no_internet_connection">There is no internet connection</string>
     <string name="error_sslhandshake">Turn off VPN and try again</string>
+    <string name="error_empty_fields">Fields Word and Definition shouldn\'t be empty</string>
+    <string name="error_word_exist">Word already exist</string>
+    <string name="word_added">Word successfully added</string>
 </resources>
