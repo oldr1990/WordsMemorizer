@@ -3,7 +3,7 @@ package com.github.wordsmemorizer.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
-import com.github.wordsmemorizer.screens.add_simple_word.EditWordScreen
+import com.github.wordsmemorizer.screens.edit_word.EditWordScreen
 import com.github.wordsmemorizer.screens.add_word.AddWordRoute
 import com.github.wordsmemorizer.screens.home.HomeRoute
 

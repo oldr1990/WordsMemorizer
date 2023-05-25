@@ -18,8 +18,7 @@ import androidx.navigation.NavController
 import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.navigation.Routes
 import com.github.wordsmemorizer.navigation.toRoute
-import com.github.wordsmemorizer.screens.add_simple_word.EditWordScreen
-import com.github.wordsmemorizer.screens.add_word.AddWordRoute
+import com.github.wordsmemorizer.screens.edit_word.EditWordScreen
 import com.github.wordsmemorizer.screens.comosables.WMBottomAppBar
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
 import kotlinx.coroutines.CoroutineScope

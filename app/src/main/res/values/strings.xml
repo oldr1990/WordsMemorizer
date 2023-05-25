@@ -8,6 +8,7 @@
     <string name="delete">Удавлить</string>
     <string name="word">Слово</string>
     <string name="phonetic">Произношение</string>
+    <string name="hint">Подсказка</string>
     <string name="search_in_dictionary">Поиск</string>
     <string name="add_custom_word">Добавить в ручную</string>
     <string name="link_to_sound">Ссылка на звук</string>
@@ -17,7 +18,7 @@
     <string name="adjective">Прилагательное</string>
     <string name="adverb">Наречие</string>
     <string name="proposition">Предлог</string>
-    <string name="definitions">Определения:</string>
+    <string name="definition">Определение</string>
     <string name="empty_definitions">Нет добавленных определений</string>
     <string name="inptu_definition">Введите определение</string>
     <string name="add_to_library">Добавить в библиотеку</string>
@@ -25,4 +26,8 @@
     <string name="default_error">Что-то пошло не так</string>
     <string name="error_no_internet_connection">Отсутсвует интернет соединение</string>
     <string name="error_sslhandshake">Отключите ВПН и попробуйте снова</string>
+    <string name="error_empty_fields">Поле Слово и Определение не должны быть пустыми</string>
+    <string name="error_word_exist">Слово уже добавлено</string>
+    <string name="word_added">Слово успешно добавлено</string>
+
 </resources>

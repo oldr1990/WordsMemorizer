@@ -20,7 +20,6 @@ import javax.net.ssl.SSLHandshakeException
 open class BaseViewModel<T>(private val initialState: T) : ViewModel() {
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
-    var arguments: Bundle? = null
     private val _screenEvent = MutableSharedFlow<ScreenEvent>()
     val screenEvent = _screenEvent.asSharedFlow()
 

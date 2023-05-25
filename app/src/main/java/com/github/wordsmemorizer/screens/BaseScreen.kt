@@ -26,6 +26,7 @@ fun <T> BaseScreen(
             keyboard?.hide()
             when (it) {
                 is Navigate -> {
+                    progress.value = false
                     when (it.action) {
                         is NavigationAction.GoTo -> {
                             navController.navigate(it.action.route.route)
@@ -34,6 +35,7 @@ fun <T> BaseScreen(
                     }
                 }
                 is Snackbar -> {
+                    progress.value = false
                     when (it.message) {
                         is FromResource -> {
                             scaffoldState.snackbarHostState.showSnackbar(context.getString(it.message.resource))

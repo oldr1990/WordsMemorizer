@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.models.LexicalCategories
 import com.github.wordsmemorizer.models.Word
@@ -104,7 +103,7 @@ fun AddWordView(
             Divider()
             Text(
                 modifier = Modifier.padding(top = 16.dp),
-                text = stringResource(id = R.string.definitions),
+                text = stringResource(id = R.string.definition),
                 style = MaterialTheme.typography.h5
             )
             Column(modifier = Modifier.fillMaxWidth()) {
