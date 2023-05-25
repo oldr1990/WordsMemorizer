@@ -37,7 +37,6 @@ fun AddWordView(
                 text = word.name,
                 hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
-                maximumCharacters = 50,
                 onValueChange = {
                     onValueChanged(word.copy(name = it.removeSpecialCharacters()))
                 },
@@ -46,7 +45,6 @@ fun AddWordView(
                 text = word.translation,
                 hint = stringResource(id = R.string.translation),
                 keyboardAction = ImeAction.Next,
-                maximumCharacters = 50,
                 onValueChange = {
                     onValueChanged(word.copy(translation = it.removeSpecialCharacters()))
                 })
@@ -54,7 +52,6 @@ fun AddWordView(
                 text = word.phonetic,
                 keyboardAction = ImeAction.Next,
                 hint = stringResource(id = R.string.phonetic),
-                maximumCharacters = 50,
                 onValueChange = {
                     onValueChanged(word.copy(phonetic = it.removeSpecialCharacters()))
                 })
@@ -62,6 +59,7 @@ fun AddWordView(
                 text = word.sound,
                 hint = stringResource(id = R.string.link_to_sound),
                 keyboardAction = ImeAction.Next,
+                maximumCharacters = 100,
                 onValueChange = {
                     onValueChanged(word.copy(sound = it.removeSpecialCharacters()))
                 })
@@ -105,37 +103,52 @@ fun AddWordView(
             }
             Divider()
             Text(
-                modifier = Modifier.padding(vertical = 16.dp),
+                modifier = Modifier.padding(top = 16.dp),
                 text = stringResource(id = R.string.definitions),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h5
             )
             Column(modifier = Modifier.fillMaxWidth()) {
                 if (word.definitions.isEmpty()) {
                     Text(
+                        modifier = Modifier.padding(top = 16.dp),
                         text = stringResource(id = R.string.empty_definitions),
                         color = MaterialTheme.colors.primaryVariant,
                         style = MaterialTheme.typography.h5
                     )
                 } else {
                     word.definitions.forEach {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                modifier = Modifier.weight(weight = 1f, fill = true),
-                                text = it,
-                                style = MaterialTheme.typography.h5,
-                                color = MaterialTheme.colors.primaryVariant,
-                            )
-                            IconButton(
-                                modifier = Modifier.padding(0.dp),
-                                onClick = { onValueChanged(word.copy(definitions = ArrayList(word.definitions - it))) }) {
-                                Icon(
-                                    Icons.Default.Delete,
-                                    contentDescription = stringResource(id = R.string.delete)
+                        Column {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    modifier = Modifier.weight(weight = 1f, fill = true),
+                                    text = it,
+                                    style = MaterialTheme.typography.h5,
+                                    color = MaterialTheme.colors.primaryVariant,
                                 )
+                                IconButton(
+                                    modifier = Modifier.padding(0.dp),
+                                    onClick = {
+                                        onValueChanged(
+                                            word.copy(
+                                                definitions = ArrayList(
+                                                    word.definitions - it
+                                                )
+                                            )
+                                        )
+                                    }) {
+                                    Icon(
+                                        Icons.Default.Delete,
+                                        contentDescription = stringResource(id = R.string.delete)
+                                    )
+                                }
                             }
+                            Divider()
                         }
                     }
                 }
@@ -151,7 +164,6 @@ fun AddWordView(
                             .padding(end = 16.dp),
                         text = definitionText,
                         hint = stringResource(id = R.string.inptu_definition),
-                        maximumCharacters = 50,
                         onValueChange = { definitionText = it.removeSpecialCharacters() },
                         onKeyboardAction = {
                             if (definitionText.isNotEmpty()

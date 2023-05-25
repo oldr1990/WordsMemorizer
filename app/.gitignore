@@ -1,2 +1,2 @@
 /build
-/main/java/com/github/wordsmemorizer/ApiKey.kt
+/src/main/java/com/github/wordsmemorizer/network/Api.kt

@@ -4,7 +4,7 @@ package com.github.wordsmemorizer.room
 import androidx.room.TypeConverter
 
 class ListToStringConverter {
-    private val divider = "/div/"
+    private val divider = "&"
     @TypeConverter
     fun fromListToString(list : List<String>) :String {
         var result = ""

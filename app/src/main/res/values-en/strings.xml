@@ -9,7 +9,7 @@
     <string name="delete">Delete Word</string>
     <string name="word">Word</string>
     <string name="phonetic">Phonetic</string>
-    <string name="search_in_dictionary">Search in dictionary</string>
+    <string name="search_in_dictionary">Search</string>
     <string name="add_custom_word">Add custom word</string>
     <string name="link_to_sound">Link to sound</string>
     <string name="lexical_catogories">Lexical categories</string>
@@ -23,4 +23,7 @@
     <string name="inptu_definition">Input definition</string>
     <string name="add_to_library">Add to library</string>
     <string name="translation">Translation</string>
+    <string name="default_error">Something went wrong</string>
+    <string name="error_no_internet_connection">There is no internet connection</string>
+    <string name="error_sslhandshake">Turn off VPN and try again</string>
 </resources>
