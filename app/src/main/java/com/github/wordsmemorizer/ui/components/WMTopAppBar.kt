@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 
 @Composable
 fun WMTopAppBar(title: String, navController: NavController, isNotHomePage: Boolean = true) {
-    TopAppBar {
+    TopAppBar(elevation = 4.dp) {
         if (isNotHomePage) {
             Icon(
                 imageVector = Icons.Default.ArrowBack,

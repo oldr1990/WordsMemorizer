@@ -4,5 +4,22 @@
     <string name="back">Назад</string>
     <string name="add">Добавить</string>
     <string name="add_word">Добавить Слово</string>
+    <string name="input_word">Введите слово</string>
     <string name="delete">Удавлить</string>
+    <string name="word">Слово</string>
+    <string name="phonetic">Произношение</string>
+    <string name="search_in_dictionary">Поиск по словарю</string>
+    <string name="add_custom_word">Добавить в ручную</string>
+    <string name="link_to_sound">Ссылка на звук</string>
+    <string name="lexical_catogories">Часть речи</string>
+    <string name="noun">Сущиствительное</string>
+    <string name="verb">Глагол</string>
+    <string name="adjective">Прилагательное</string>
+    <string name="adverb">Наречие</string>
+    <string name="proposition">Предлог</string>
+    <string name="definitions">Определения:</string>
+    <string name="empty_definitions">Нет добавленных определений</string>
+    <string name="inptu_definition">Введите определение</string>
+    <string name="add_to_library">Добавить в библиотеку</string>
+    <string name="translation">Перевод</string>
 </resources>
