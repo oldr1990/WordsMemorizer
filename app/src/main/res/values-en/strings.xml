@@ -30,4 +30,5 @@
     <string name="error_empty_fields">Fields Word and Definition shouldn\'t be empty</string>
     <string name="error_word_exist">Word already exist</string>
     <string name="word_added">Word successfully added</string>
+    <string name="try_again">Try again</string>
 </resources>

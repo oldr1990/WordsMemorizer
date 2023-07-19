@@ -29,5 +29,6 @@
     <string name="error_empty_fields">Поле Слово и Определение не должны быть пустыми</string>
     <string name="error_word_exist">Слово уже добавлено</string>
     <string name="word_added">Слово успешно добавлено</string>
+    <string name="try_again">Повторить</string>
 
 </resources>

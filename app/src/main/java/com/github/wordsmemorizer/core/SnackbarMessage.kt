@@ -1,4 +1,4 @@
-package com.github.wordsmemorizer.screens
+package com.github.wordsmemorizer.core
 
 sealed class SnackbarMessage {
     class FromString(val message: String) : SnackbarMessage()
