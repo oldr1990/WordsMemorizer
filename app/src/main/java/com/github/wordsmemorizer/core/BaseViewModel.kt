@@ -9,7 +9,7 @@ import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.navigation.Argument
 import com.github.wordsmemorizer.navigation.Navigation
 import com.github.wordsmemorizer.navigation.Routes
-import com.github.wordsmemorizer.network.Response
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import okio.ByteString.Companion.decodeBase64
@@ -19,24 +19,24 @@ import java.net.ConnectException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
-
+@HiltViewModel
 open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle) :
     ViewModel() {
     private val _state = MutableStateFlow(initialState)
     val state = _state.asStateFlow()
-    private val _screenEvent = MutableSharedFlow<ScreenEvent>()
+    private val _screenEvent = MutableSharedFlow<ScreenAction>()
     val screenEvent = _screenEvent.asSharedFlow()
 
     val argument = savedStateHandle.get<String>(Navigation.argKey).orEmpty().decodeBase64()
     fun showMessage(message: String) {
         viewModelScope.launch {
-            _screenEvent.emit(ScreenEvent.Snackbar(SnackbarMessage.FromString(message)))
+            _screenEvent.emit(ScreenAction.Snackbar(SnackbarMessage.FromString(message)))
         }
     }
 
     fun showMessage(resource: Int) {
         viewModelScope.launch {
-            _screenEvent.emit(ScreenEvent.Snackbar(SnackbarMessage.FromResource(resource)))
+            _screenEvent.emit(ScreenAction.Snackbar(SnackbarMessage.FromResource(resource)))
         }
     }
 
@@ -49,20 +49,27 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
 
     fun loading(loading: Boolean) {
         viewModelScope.launch {
-            _screenEvent.emit(ScreenEvent.Progressbar(loading))
+            _screenEvent.emit(ScreenAction.Progressbar(loading))
         }
     }
 
     fun popUp() {
         viewModelScope.launch {
-            _screenEvent.emit(ScreenEvent.Navigate(NavigationAction.PopUp))
+            _screenEvent.emit(ScreenAction.Navigate(NavigationAction.PopUp))
         }
     }
 
-    fun <T> push(route: Routes, arguments: Argument<T>?) {
+    fun <T> push(route: Routes, arguments: Argument<T>? = null) {
         viewModelScope.launch {
             _screenEvent.emit(
-                ScreenEvent.Navigate(NavigationAction.Push(route, arguments))
+                ScreenAction.Navigate(NavigationAction.Push(route, arguments))
+            )
+        }
+    }
+    fun  push(route: Routes) {
+        viewModelScope.launch {
+            _screenEvent.emit(
+                ScreenAction.Navigate(NavigationAction.Push<Any>(route, null))
             )
         }
     }
@@ -74,7 +81,7 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
     ) {
         viewModelScope.launch {
             _screenEvent.emit(
-                ScreenEvent.Navigate(
+                ScreenAction.Navigate(
                     NavigationAction.PushReplacement(
                         replacedRoute,
                         destination,

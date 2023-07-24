@@ -1,6 +1,7 @@
 package com.github.wordsmemorizer.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -9,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.github.wordsmemorizer.core.BaseScreen
 import com.github.wordsmemorizer.screens.home.HomeScreen
 import com.github.wordsmemorizer.utils.decodeBase64
 import com.github.wordsmemorizer.utils.encodeBase64

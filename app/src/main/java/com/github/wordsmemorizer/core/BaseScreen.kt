@@ -1,13 +1,9 @@
 package com.github.wordsmemorizer.core
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -40,7 +36,7 @@ fun <T> BaseScreen(
         viewModel.screenEvent.collect {
             keyboard?.hide()
             when (it) {
-                is ScreenEvent.Navigate -> {
+                is ScreenAction.Navigate -> {
                     progress.value = false
                     when (it.action) {
                         is NavigationAction.Push<*> -> {
@@ -58,7 +54,7 @@ fun <T> BaseScreen(
                     }
                 }
 
-                is ScreenEvent.Snackbar -> {
+                is ScreenAction.Snackbar -> {
                     progress.value = false
                     when (it.message) {
                         is SnackbarMessage.FromResource -> {
@@ -71,7 +67,7 @@ fun <T> BaseScreen(
                     }
                 }
 
-                is ScreenEvent.Progressbar -> {
+                is ScreenAction.Progressbar -> {
                     progress.value = it.isLoading
                 }
             }
@@ -86,8 +82,6 @@ fun <T> BaseScreen(
             modifier = Modifier
                 .padding(it)
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .height(IntrinsicSize.Max)
         ) {
             content(it)
         }
