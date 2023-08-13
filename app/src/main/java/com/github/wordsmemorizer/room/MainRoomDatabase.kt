@@ -3,13 +3,13 @@ package com.github.wordsmemorizer.room
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.github.wordsmemorizer.models.Question
+import com.github.wordsmemorizer.models.Flashcard
 
 @Database(
-    entities = [Question::class],
+    entities = [Flashcard::class],
     version = 4
 )
 @TypeConverters(ListToStringConverter::class)
 abstract class MainRoomDatabase : RoomDatabase() {
-    abstract fun questionDao(): QuestionDao
+    abstract fun questionDao(): FlashcardDao
 }

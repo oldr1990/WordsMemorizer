@@ -20,6 +20,6 @@ interface Argument<T> {
     }
 }
 
-class ArgumentString(val value: String) : Argument<ArgumentString>
+class StringArgument(val value: String = "") : Argument<StringArgument>
 
-class ArgumentInt(val value: Int) : Argument<ArgumentInt>
+class IntArgument(val value: Int = -1) : Argument<IntArgument>

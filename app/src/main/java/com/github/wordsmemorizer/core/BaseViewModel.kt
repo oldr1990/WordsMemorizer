@@ -19,7 +19,6 @@ import java.net.ConnectException
 import java.net.UnknownHostException
 import javax.net.ssl.SSLHandshakeException
 
-@HiltViewModel
 open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle) :
     ViewModel() {
     private val _state = MutableStateFlow(initialState)
@@ -27,7 +26,11 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
     private val _screenEvent = MutableSharedFlow<ScreenAction>()
     val screenEvent = _screenEvent.asSharedFlow()
 
-    val argument = savedStateHandle.get<String>(Navigation.argKey).orEmpty().decodeBase64()
+    val argument = try {
+        savedStateHandle.get<String>(Navigation.argKey).orEmpty()
+    } catch (e:Exception){
+        null
+    }
     fun showMessage(message: String) {
         viewModelScope.launch {
             _screenEvent.emit(ScreenAction.Snackbar(SnackbarMessage.FromString(message)))
@@ -56,6 +59,14 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
     fun popUp() {
         viewModelScope.launch {
             _screenEvent.emit(ScreenAction.Navigate(NavigationAction.PopUp))
+        }
+    }
+
+    fun <T> popUpWithResult(key: String, argument: Argument<T>){
+        viewModelScope.launch {
+            _screenEvent.emit(
+                ScreenAction.Navigate(NavigationAction.popUpWithResult(key,argument))
+            )
         }
     }
 
@@ -138,7 +149,7 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
         }
     }
 
-    private fun errorHandler(e: Exception): WMError {
+     fun errorHandler(e: Exception): WMError {
         return when (e) {
             is HttpException -> {
                 val message = parseError(e)
@@ -171,7 +182,7 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
         }
     }
 
-    fun parseError(e: HttpException): String {
+    private fun parseError(e: HttpException): String {
         val json = e.response()?.errorBody()?.string()?.replace("\n", "")
         return JSONObject(json.orEmpty()).getString("message")
             ?: JSONObject(json.orEmpty()).getString("error").orEmpty()

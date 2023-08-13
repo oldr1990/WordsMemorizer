@@ -5,8 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.util.*
 
-@Entity(tableName = "questions")
-data class Question(
+@Entity(tableName = "flashcards")
+data class Flashcard(
     @PrimaryKey(autoGenerate = true)  val id: Int = 0,
     val answer: String = "",
     val question: String = "",

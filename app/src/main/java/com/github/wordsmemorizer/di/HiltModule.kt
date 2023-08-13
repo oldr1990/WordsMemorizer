@@ -3,7 +3,7 @@ package com.github.wordsmemorizer.di
 import android.content.Context
 import androidx.room.Room
 import com.github.wordsmemorizer.room.MainRoomDatabase
-import com.github.wordsmemorizer.room.QuestionDao
+import com.github.wordsmemorizer.room.FlashcardDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +21,7 @@ object HiltModule {
             .build()
  @Provides
     @Singleton
-    fun providesSimpleWordDao(database: MainRoomDatabase): QuestionDao = database.questionDao()
+    fun providesSimpleWordDao(database: MainRoomDatabase): FlashcardDao = database.questionDao()
 
 
 }

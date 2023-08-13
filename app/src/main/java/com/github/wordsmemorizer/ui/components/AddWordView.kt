@@ -10,14 +10,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.github.wordsmemorizer.R
-import com.github.wordsmemorizer.models.Question
+import com.github.wordsmemorizer.models.Flashcard
 import com.github.wordsmemorizer.utils.removeSpecialCharacters
 
 @Composable
 fun AddWordView(
     modifier: Modifier = Modifier,
-    question: Question,
-    onValueChanged: (Question) -> Unit,
+    flashcard: Flashcard,
+    onValueChanged: (Flashcard) -> Unit,
 ) {
     Card(
         elevation = CardDefaults.cardElevation(4.dp)
@@ -28,27 +28,27 @@ fun AddWordView(
                 .padding(16.dp)
         ) {
             WMTextField(
-                text = question.question,
+                text = flashcard.question,
                 hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
                 onValueChange = {
-                    onValueChanged(question.copy(question = it.removeSpecialCharacters()))
+                    onValueChanged(flashcard.copy(question = it.removeSpecialCharacters()))
                 },
             )
             WMTextField(
-                text = question.answer,
+                text = flashcard.answer,
                 hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
                 onValueChange = {
-                    onValueChanged(question.copy(answer = it.removeSpecialCharacters()))
+                    onValueChanged(flashcard.copy(answer = it.removeSpecialCharacters()))
                 },
             )
             WMTextField(
-                text = question.hint,
+                text = flashcard.hint,
                 hint = stringResource(id = R.string.input_word),
                 keyboardAction = ImeAction.Next,
                 onValueChange = {
-                    onValueChanged(question.copy(hint = it.removeSpecialCharacters()))
+                    onValueChanged(flashcard.copy(hint = it.removeSpecialCharacters()))
                 },
             )
         }

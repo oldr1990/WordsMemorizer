@@ -51,6 +51,13 @@ fun <T> BaseScreen(
                                 it.action.arguments
                             )
                         }
+                        is NavigationAction.popUpWithResult<*> -> {
+                            navController.previousBackStackEntry?.savedStateHandle?.set(
+                                it.action.key,
+                                it.action.arguments.toJson()
+                            )
+                            navController.popBackStack()
+                        }
                     }
                 }
 

@@ -30,8 +30,14 @@ fun Navigator(navController: NavHostController = rememberNavController()) {
     }
 }
 
-fun <T> NavController.push(route: Routes, arguments: Argument<T>? = null) =
-    this.navigate(route.route + "?${Navigation.argKey}=${arguments?.toJson()?.encodeBase64()}")
+fun <T> NavController.push(route: Routes, arguments: Argument<T>? = null) {
+    var destination = route.route
+    arguments?.let {
+        destination += "?${Navigation.argKey}=${it.toJson().encodeBase64()}"
+    }
+    this.navigate(destination)
+}
+
 
 fun <T> NavController.pushReplacement(
     destination: Routes,

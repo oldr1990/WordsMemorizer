@@ -19,5 +19,6 @@ sealed class NavigationAction {
     ) : NavigationAction()
 
     class Push<T>(val route: Routes, val arguments: Argument<T>? = null) : NavigationAction()
+    class popUpWithResult<T>(val key: String, val arguments: Argument<T>) : NavigationAction()
     object PopUp : NavigationAction()
 }
