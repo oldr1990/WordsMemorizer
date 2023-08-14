@@ -26,7 +26,8 @@ object HomeScreen : Routes {
         BaseScreen(
             title = R.string.app_name,
             navController = navController,
-            viewModel = viewModel
+            viewModel = viewModel,
+            key = route,
         ) {
             HomeScreen(viewModel::onScreenEvent, state)
         }

@@ -1,7 +1,6 @@
 package com.github.wordsmemorizer.core
 
 
-
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,10 +8,9 @@ import com.github.wordsmemorizer.R
 import com.github.wordsmemorizer.navigation.Argument
 import com.github.wordsmemorizer.navigation.Navigation
 import com.github.wordsmemorizer.navigation.Routes
-import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import okio.ByteString.Companion.decodeBase64
 import org.json.JSONObject
 import retrofit2.HttpException
 import java.net.ConnectException
@@ -28,9 +26,18 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
 
     val argument = try {
         savedStateHandle.get<String>(Navigation.argKey).orEmpty()
-    } catch (e:Exception){
+    } catch (e: Exception) {
         null
     }
+
+    open fun onReturnedData(json: String) {}
+    fun catchReturnedData(json: String) {
+        viewModelScope.launch {
+            awaitFrame()
+            onReturnedData(json)
+        }
+    }
+
     fun showMessage(message: String) {
         viewModelScope.launch {
             _screenEvent.emit(ScreenAction.Snackbar(SnackbarMessage.FromString(message)))
@@ -40,6 +47,14 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
     fun showMessage(resource: Int) {
         viewModelScope.launch {
             _screenEvent.emit(ScreenAction.Snackbar(SnackbarMessage.FromResource(resource)))
+        }
+    }
+
+    fun showError(e: Exception){
+       if ( e.message != null) {
+            showMessage(e.message!!)
+        } else {
+            showMessage(R.string.default_error)
         }
     }
 
@@ -62,10 +77,10 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
         }
     }
 
-    fun <T> popUpWithResult(key: String, argument: Argument<T>){
+    fun <T> popUpWithResult(key: String, argument: Argument<T>) {
         viewModelScope.launch {
             _screenEvent.emit(
-                ScreenAction.Navigate(NavigationAction.popUpWithResult(key,argument))
+                ScreenAction.Navigate(NavigationAction.popUpWithResult(key, argument))
             )
         }
     }
@@ -77,7 +92,8 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
             )
         }
     }
-    fun  push(route: Routes) {
+
+    fun push(route: Routes) {
         viewModelScope.launch {
             _screenEvent.emit(
                 ScreenAction.Navigate(NavigationAction.Push<Any>(route, null))
@@ -149,7 +165,7 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
         }
     }
 
-     fun errorHandler(e: Exception): WMError {
+    fun errorHandler(e: Exception): WMError {
         return when (e) {
             is HttpException -> {
                 val message = parseError(e)

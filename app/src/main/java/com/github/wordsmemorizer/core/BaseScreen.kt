@@ -18,6 +18,8 @@ import com.github.wordsmemorizer.navigation.push
 import com.github.wordsmemorizer.navigation.pushReplacement
 import com.github.wordsmemorizer.ui.components.WMProgressBar
 import com.github.wordsmemorizer.ui.components.WMTopAppBar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -25,6 +27,7 @@ fun <T> BaseScreen(
     title: Int,
     navController: NavController,
     viewModel: BaseViewModel<T>,
+    key: String = "default",
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
 
@@ -33,7 +36,13 @@ fun <T> BaseScreen(
     val context = LocalContext.current
     val keyboard = LocalSoftwareKeyboardController.current
     LaunchedEffect(key1 = true) {
-        viewModel.screenEvent.collect {
+        navController.currentBackStackEntry?.savedStateHandle?.get<String?>(
+            key
+        )?.let {
+            navController.currentBackStackEntry?.savedStateHandle?.remove<String>(key)
+            viewModel.catchReturnedData(it)
+        }
+        viewModel.screenEvent.collectLatest {
             keyboard?.hide()
             when (it) {
                 is ScreenAction.Navigate -> {

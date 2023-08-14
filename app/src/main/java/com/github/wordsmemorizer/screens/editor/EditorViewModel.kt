@@ -5,7 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.github.wordsmemorizer.core.BaseViewModel
 import com.github.wordsmemorizer.models.Flashcard
 import com.github.wordsmemorizer.navigation.IntArgument
+import com.github.wordsmemorizer.navigation.StringArgument
 import com.github.wordsmemorizer.room.FlashcardRepository
+import com.github.wordsmemorizer.screens.home.HomeScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -49,8 +51,9 @@ class EditorViewModel @Inject constructor(
             viewModelScope.launch {
                 try {
                     repository.addFlashcard(card)
+                    popUpWithResult(HomeScreen.route, StringArgument("Success!"))
                 } catch (e:Exception){
-                    errorHandler(e)
+                    showError(e)
                 }
             }
         } else {
