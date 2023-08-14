@@ -1,6 +1,7 @@
 package com.github.wordsmemorizer.screens.home
 
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -15,6 +16,7 @@ import com.github.wordsmemorizer.navigation.Routes
 object HomeScreen : Routes {
     override val route = "home"
 
+    @ExperimentalMaterial3Api
     @Composable
     override fun Builder(
         entry: NavBackStackEntry,

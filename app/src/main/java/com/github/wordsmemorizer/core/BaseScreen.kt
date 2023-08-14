@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -27,6 +24,9 @@ fun <T> BaseScreen(
     title: Int,
     navController: NavController,
     viewModel: BaseViewModel<T>,
+    bottomBar: @Composable () -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
+    floatingActionButtonPosition: FabPosition = FabPosition.End,
     key: String = "default",
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
@@ -93,6 +93,9 @@ fun <T> BaseScreen(
     Scaffold(
         topBar = { WMTopAppBar(title = title, navController = navController) },
         snackbarHost = { SnackbarHost(snackbarHostState) },
+        bottomBar = bottomBar,
+        floatingActionButton = floatingActionButton,
+        floatingActionButtonPosition = floatingActionButtonPosition,
     ) {
         Column(
             modifier = Modifier

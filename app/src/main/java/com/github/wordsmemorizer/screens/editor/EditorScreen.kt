@@ -3,6 +3,7 @@ package com.github.wordsmemorizer.screens.editor
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import com.github.wordsmemorizer.R
 import androidx.compose.runtime.*
@@ -23,6 +24,7 @@ import com.github.wordsmemorizer.utils.removeSpecialCharacters
 object EditorScreen : Routes {
     override val route = "editor"
 
+    @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     override fun Builder(
         entry: NavBackStackEntry,

@@ -43,16 +43,15 @@ class EditorViewModel @Inject constructor(
             updateCard(state.value.card.copy(hint = event.hint))
         }
         EditorEvent.OnSave -> onSave()
-
     }
 
-    private fun onSave(){
+    private fun onSave() {
         if (card.isValid) {
             viewModelScope.launch {
                 try {
                     repository.addFlashcard(card)
                     popUpWithResult(HomeScreen.route, StringArgument("Success!"))
-                } catch (e:Exception){
+                } catch (e: Exception) {
                     showError(e)
                 }
             }
