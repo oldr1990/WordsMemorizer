@@ -30,5 +30,8 @@
     <string name="error_word_exist">Слово уже добавлено</string>
     <string name="word_added">Слово успешно добавлено</string>
     <string name="try_again">Повторить</string>
-
+    //Menu
+    <string name="home">Главная</string>
+    <string name="history">История</string>
+    <string name="list">Список</string>
 </resources>
