@@ -131,7 +131,6 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
                 val result = request.invoke()
                 loading(false)
                 when (result) {
-
                     is Response.Error -> {
                         val error = errorHandler(result.exception)
                         onError(error)
@@ -144,6 +143,7 @@ open class BaseViewModel<T>(initialState: T, savedStateHandle: SavedStateHandle)
                     is Response.Success -> {
                         onSuccess(result.data)
                     }
+
                 }
 
             } catch (e: java.lang.Exception) {
